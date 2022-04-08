@@ -170,3 +170,54 @@ console.log("=====longestConsecutiveElements=====")
 console.log(longestConsecutiveElements([100,4,200,1,3,2]) === 4)
 console.log(longestConsecutiveElements([0, 0, 1, 2, 3, 4, 5, 6, 7, 8]) === 9)
 console.log(longestConsecutiveElements([]) === 0)
+
+// Two sum II https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
+// Tag: array, two pointers, binary search
+// Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number. Let these two numbers be numbers[index1] and numbers[index2] where 1 <= index1 < index2 <= numbers.length.
+//
+//  Return the indices of the two numbers, index1 and index2, added by one as an integer array [index1, index2] of length 2.
+//
+//  The tests are generated such that there is exactly one solution. You may not use the same element twice.
+//
+//  Your solution must use only constant extra space.
+//  Example 1:
+//  Input: numbers = [2,7,11,15], target = 9
+//  Output: [1,2]
+//  Explanation: The sum of 2 and 7 is 9. Therefore, index1 = 1, index2 = 2. We return [1, 2].
+//
+//  Example 2:
+//  Input: numbers = [2,3,4], target = 6
+//  Output: [1,3]
+//  Explanation: The sum of 2 and 4 is 6. Therefore index1 = 1, index2 = 3. We return [1, 3].
+//
+//  Example 3:
+//  Input: numbers = [-1,0], target = -1
+//  Output: [1,2]
+//  Explanation: The sum of -1 and 0 is -1. Therefore index1 = 1, index2 = 2. We return [1, 2].
+
+function twoSumII(list, target) {
+  // Loop through the list
+  // For each element:
+  //  - Loop the rest of the array and find the number adds up to the target
+  //  - If the addition is greater than target, break;
+  //  Problem: O(n^2), too long
+  //  Hint: Since it's already sorted, two pointers
+  let pt1 = 0;
+  let pt2 = list.length-1;
+  
+  for(;pt1 <= pt2;) {
+    if(list[pt1] + list[pt2] === target) {
+      return [pt1+1, pt2+1];
+    }
+    if(list[pt1] + list[pt2] > target) {
+      pt2--
+    }
+    if(list[pt1] + list[pt2] < target) {
+      pt1++
+    }
+  }
+}
+
+console.log(twoSumII([2,7,11,15], 9), [1, 2])
+console.log(twoSumII([2,3,4], 6), [1, 3])
+console.log(twoSumII([-1,0], -1), [1, 2])
