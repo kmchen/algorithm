@@ -112,3 +112,61 @@ function minOrder(n, list) {
 console.log(minOrder(6, [[0,1],[1,3],[2,3],[4,0],[4,5]]) === 3)
 console.log(minOrder(5, [[1,0],[1,2],[3,2],[3,4]]) === 2)
 console.log(minOrder(3, [[1,0],[2,0]]) === 0)
+
+// 128 https://leetcode.com/problems/longest-consecutive-sequence/
+// Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+// You must write an algorithm that runs in O(n) time.
+// 
+// Example 1:
+// [1,2,3,4,100,200]
+// Input: nums = [100,4,200,1,3,2]
+// Output: 4
+// Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
+//
+// Example 2:
+// [0, 0, 1, 2, 3, 4, 5, 6, 7, 8]
+// Input: nums = [0,3,7,2,5,8,4,6,0,1]
+// Output: 9
+// 
+// Constraints:
+// 0 <= nums.length <= 105
+// -109 <= nums[i] <= 109
+//
+function longestConsecutiveElements(list) {
+  // Convert list to a set
+  // Loop through the list and check if the element is a strting point by checking the left node
+  // If it's a starting node:
+  //  - Check whether it has a right node
+  //  - Record the max length
+  
+  if(list.length === 0) return 0;
+
+  const elemSet = new Set();
+  list.forEach((item) => elemSet.add(item));
+  
+  let maxLength = 1;
+  list.forEach((item) => {
+    // item is starting node
+    if(!elemSet.has(item - 1)) {
+      // Loop through the list and check if the element is a strting point by checking the left node
+      let startNode = item;
+      let tmpLength = 1;
+      for(let i = 0; i < elemSet.size; i++) {
+        // If item has a right neighbour
+        if(elemSet.has(startNode + 1)) {
+          tmpLength++;
+          startNode = startNode + 1;
+        } else {
+          break;
+        }
+      }
+      maxLength = tmpLength > maxLength ? tmpLength : maxLength;
+    }
+  })
+  return maxLength
+}
+
+console.log("=====longestConsecutiveElements=====")
+console.log(longestConsecutiveElements([100,4,200,1,3,2]) === 4)
+console.log(longestConsecutiveElements([0, 0, 1, 2, 3, 4, 5, 6, 7, 8]) === 9)
+console.log(longestConsecutiveElements([]) === 0)
